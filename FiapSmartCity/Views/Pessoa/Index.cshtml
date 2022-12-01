@@ -1,0 +1,60 @@
+﻿@model IEnumerable<FiapSmartCity.Models.Pessoa>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Pessoas</title>
+</head>
+<body>
+    <h1>Pessoas</h1>
+    <p>
+        <!-- uso de TagHelpers para definir o Controller e a Action -->
+        <a asp-controller="Pessoa" asp-action="Cadastrar">Nova Pessoa</a>
+    </p>
+    <!-- Verifica se a chave "Mensagem" existe no TempData -->
+    @if (@TempData["Mensagem"] != null)
+    {
+            <div class="alert alert-success" role="alert">
+                <!-- Imprime para o usuário a mensagem -->
+        @TempData["Mensagem"]
+            </div>
+    }
+    <table class="table" border="1">
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>
+                        <label>@item.IdPessoa</label>
+                    </td>
+                    <td>
+                        <label>@item.Nome</label>
+                    </td>
+                    <td>
+                        <label>@item.Telefone</label>
+                    </td>
+                    <td>
+                        <!-- asp-route-id é usado para informar o Id do Item selecionado. -->
+                        <a asp-controller="Pessoa"
+                   asp-action="Editar"
+                   asp-route-id="@item.IdPessoa">Editar</a>
+                        <a asp-controller="Pessoa"
+                   asp-action="Consultar"
+                   asp-route-id="@item.IdPessoa">Consultar</a>
+                        <a asp-controller="Pessoa"
+                   asp-action="Excluir"
+                   asp-route-id="@item.IdPessoa">Excluir</a>
+                    </td>
+                </tr>
+        }
+    </table>
+</body>
+</html>
